@@ -1,0 +1,10 @@
+D:\Code\ASP.NET\StarSectorSystemGenerator\StarSectorSystemGenerator\bin\Debug\StarSectorSystemGenerator.exe.config
+D:\Code\ASP.NET\StarSectorSystemGenerator\StarSectorSystemGenerator\bin\Debug\StarSectorSystemGenerator.exe
+D:\Code\ASP.NET\StarSectorSystemGenerator\StarSectorSystemGenerator\bin\Debug\StarSectorSystemGenerator.pdb
+D:\Code\ASP.NET\StarSectorSystemGenerator\StarSectorSystemGenerator\obj\Debug\StarSectorSystemGenerator.csprojAssemblyReference.cache
+D:\Code\ASP.NET\StarSectorSystemGenerator\StarSectorSystemGenerator\obj\Debug\StarSectorSystemGenerator.Form1.resources
+D:\Code\ASP.NET\StarSectorSystemGenerator\StarSectorSystemGenerator\obj\Debug\StarSectorSystemGenerator.Properties.Resources.resources
+D:\Code\ASP.NET\StarSectorSystemGenerator\StarSectorSystemGenerator\obj\Debug\StarSectorSystemGenerator.csproj.GenerateResource.cache
+D:\Code\ASP.NET\StarSectorSystemGenerator\StarSectorSystemGenerator\obj\Debug\StarSectorSystemGenerator.csproj.CoreCompileInputs.cache
+D:\Code\ASP.NET\StarSectorSystemGenerator\StarSectorSystemGenerator\obj\Debug\StarSectorSystemGenerator.exe
+D:\Code\ASP.NET\StarSectorSystemGenerator\StarSectorSystemGenerator\obj\Debug\StarSectorSystemGenerator.pdb
