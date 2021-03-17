@@ -172,6 +172,7 @@ namespace StarSectorSystemGenerator {
 			this.lv_ReferencesListView.TabIndex = 11;
 			this.lv_ReferencesListView.UseCompatibleStateImageBehavior = false;
 			this.lv_ReferencesListView.View = System.Windows.Forms.View.Details;
+			this.lv_ReferencesListView.SelectedIndexChanged += new System.EventHandler(this.lv_ReferencesListView_SelectedIndexChanged);
 			// 
 			// ch_RefId
 			// 
@@ -207,6 +208,7 @@ namespace StarSectorSystemGenerator {
 			this.pg_PlanetProperties.Name = "pg_PlanetProperties";
 			this.pg_PlanetProperties.Size = new System.Drawing.Size(219, 232);
 			this.pg_PlanetProperties.TabIndex = 15;
+			this.pg_PlanetProperties.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pg_PlanetProperties_PropertyValueChanged);
 			// 
 			// Form1
 			// 

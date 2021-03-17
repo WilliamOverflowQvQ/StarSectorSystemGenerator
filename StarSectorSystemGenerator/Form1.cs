@@ -29,7 +29,11 @@ namespace StarSectorSystemGenerator {
 		}
 
 		private void btn_AddReference_Click(object sender, EventArgs e) {
-
+			MyPlanetRef myPlanetRef = new MyPlanetRef(
+				StarSystemController.myStarSystemAPI.Name + "Ref" +
+				lv_ReferencesListView.Items.Count);
+			MyPlanetRefLVItem myPlanetRefLVItem = new MyPlanetRefLVItem(myPlanetRef);
+			lv_ReferencesListView.Items.Add(myPlanetRefLVItem);
 		}
 
 		private void updatePlanetsLV() {
@@ -79,16 +83,49 @@ namespace StarSectorSystemGenerator {
 			sb.AppendLine(myStarSystemAPI.AssignStarSystemStringLine());    //Star System
 			sb.AppendLine(myStarSystemAPI.AssignCenterStarStringLine());    //Center Star
 
-			foreach (MyPlanetAPILVItem ilvi in lv_PlanetsListView.Items) {
+			//Get planet refs
+			foreach (MyPlanetRefLVItem ilvi in lv_ReferencesListView.Items)
+				sb.AppendLine(myStarSystemAPI.DefinePlanetReferenceStringLine(ilvi.thisPlanetRef));
+			sb.AppendLine(myStarSystemAPI.GetPlanetRefsLoopHead());         //Use loop to assign all the PlanetAPIs
+			foreach (MyPlanetRefLVItem ilvi in lv_ReferencesListView.Items)
+				sb.AppendLine(myStarSystemAPI.AssignPlanetRefStringLine(ilvi.thisPlanetRef));
+			sb.AppendLine(myStarSystemAPI.GetPlanetRefsLoopTail());
+
+			//Add planets
+			foreach (MyPlanetAPILVItem ilvi in lv_PlanetsListView.Items)
 				sb.AppendLine(myStarSystemAPI.AssignPlanetGeneratorStringLine(
 					ilvi.thisPlanetAPI));
-			}
+			
 			tb_ResultString.Text = sb.ToString();							//Submit
 		}
 
 		private void btn_RemovePlanet_Click(object sender, EventArgs e) {
 			lv_PlanetsListView.SelectedItems[0].Remove();
 			pg_PlanetProperties.SelectedObject = null;
+		}
+
+		private void pg_PlanetProperties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e) {
+			foreach (MyPlanetAPILVItem ilvi in lv_PlanetsListView.Items) {
+				ilvi.SubItems[1].Text = ilvi.thisPlanetAPI.Name;
+				ilvi.SubItems[2].Text = ilvi.thisPlanetAPI.Focus;
+				ilvi.SubItems[3].Text = ilvi.thisPlanetAPI.Type;
+			}
+			foreach(MyPlanetRefLVItem ilvi in lv_ReferencesListView.Items) {
+				ilvi.SubItems[1].Text = ilvi.thisPlanetRef.Name;
+			}
+		}
+
+		private void lv_ReferencesListView_SelectedIndexChanged(object sender, EventArgs e) {
+			if (lv_ReferencesListView.Items.Count == 0)
+				return;
+			if (lv_ReferencesListView.SelectedItems.Count == 0) {
+				btn_AddReference.Enabled = false;
+				return;
+			}
+			btn_AddReference.Enabled = true;
+			MyPlanetRefLVItem selected =
+				lv_ReferencesListView.SelectedItems[0] as MyPlanetRefLVItem;
+			pg_PlanetProperties.SelectedObject = selected.thisPlanetRef;
 		}
 	}
 
@@ -158,18 +195,13 @@ namespace StarSectorSystemGenerator {
 					GetCenterStarString() + ";";
 			}
 
-			public string AssignPlanetReference(MyPlanetRef reference) {
-				return "PlanetAPI " + GetVarNameP(Name) + " = " +
-					"";
-			}
-
 			public string AssignPlanetGeneratorStringLine(MyPlanetAPI planet) {
 				if (planet.Focus == "")
-					planet.Focus = GetCenterStarString();
+					planet.Focus = Name;
 				return "PlanetAPI " + GetVarNameP(planet.Name) + " = " +
 					GetVarName(StarSystemVarName) + ".addPlanet(" +
 					GetQuoteName(planet.Name) + ", " +
-					GetVarName(planet.Focus) + ", " +
+					GetVarNameP(planet.Focus) + ", " +
 					GetQuoteName(planet.Name) + ", " +
 					GetQuoteName(planet.Type) + ", " +
 					planet.Angle + ", " +
@@ -177,6 +209,29 @@ namespace StarSectorSystemGenerator {
 					planet.OrbitRadius + ", " +
 					planet.OrbitDays + ");";
 			}
+
+			public string DefinePlanetReferenceStringLine(MyPlanetRef planet) {
+				if (planet.Name == "")
+					return "";
+				return "PlanetAPI " + GetVarNameP(planet.Name) + " = " +
+					"null;";
+			}
+
+			public string GetPlanetRefsLoopHead() {
+				return "foreach (PlanetAPI ipapi : " + GetVarName(StarSystemVarName) + ".getPlanets())" +
+					" {";
+			}
+
+			public string GetPlanetRefsLoopTail() {
+				return "}";
+			}
+
+			public string AssignPlanetRefStringLine(MyPlanetRef planet) {
+				return "if(((PlanetAPI)ipapi).getName() == " + GetQuoteName(planet.Name) + ")" +
+					GetVarNameP(planet.Name) + " = " + "(PlanetAPI)ipapi;";
+			}
+
+
 		}
 
 		public class MyPlanetAPI {
@@ -212,7 +267,10 @@ namespace StarSectorSystemGenerator {
 
 		//可以使用已经存在的行星作为公转对象，用这个进行提前声明
 		public class MyPlanetRef {
-			public string Name;
+			public string Name { get; set; }
+			public MyPlanetRef(string name) {
+				Name = name;
+			}
 		}
 	}
 
