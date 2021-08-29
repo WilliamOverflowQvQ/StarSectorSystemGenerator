@@ -1,2 +1,10 @@
 Spawn a gate:
 runcode PlanetAPI star = ((StarSystemAPI) $loc).getStar(); if (star != null) { $loc.addCustomEntity(null, null, "inactive_gate", "neutral").setCircularOrbitPointingDown(star, VectorUtils.getAngle(star.getLocation(), $playerFleet.getLocation()), MathUtils.getDistance(star.getLocation(), $playerFleet.getLocation()), 180f); }
+
+Spawn a stable location:
+runcode PlanetAPI star = ((StarSystemAPI) $loc).getStar(); if (star != null) { $loc.addCustomEntity(null, null, "stable_location", "neutral").setCircularOrbitPointingDown(star, VectorUtils.getAngle(star.getLocation(), $playerFleet.getLocation()), MathUtils.getDistance(star.getLocation(), $playerFleet.getLocation()), 180f); }
+
+Planet Type name list:
+  currently (0.95ac10) tested and succeed:
+    desert (desert)
+    jungle(jungle) ...
