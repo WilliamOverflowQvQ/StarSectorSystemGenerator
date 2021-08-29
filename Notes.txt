@@ -1,0 +1,2 @@
+Spawn a gate:
+runcode PlanetAPI star = ((StarSystemAPI) $loc).getStar(); if (star != null) { $loc.addCustomEntity(null, null, "inactive_gate", "neutral").setCircularOrbitPointingDown(star, VectorUtils.getAngle(star.getLocation(), $playerFleet.getLocation()), MathUtils.getDistance(star.getLocation(), $playerFleet.getLocation()), 180f); }
